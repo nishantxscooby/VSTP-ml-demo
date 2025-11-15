@@ -1,3 +1,135 @@
+📌 VSTP – Vishu Secure Transfer Protocol (with AI-based Anomaly Detection)
+
+Author: Nishant
+Repository: https://github.com/nishantxscooby/VSTP-ml-demo
+
+🚀 Overview
+
+This project implements VSTP (Vishu Secure Transfer Protocol) in Rust and adds an AI-driven anomaly detection engine on top of it to detect:
+
+Packet tampering
+
+Packet theft
+
+Replay/forgery attempts
+
+Unusual network behavior (dropped packets, abnormal checksum patterns, jitter spikes, etc.)
+
+The system combines Rust networking + JSON flow logs + Python ML pipeline to detect threats in real-time using an unsupervised IsolationForest model.
+
+🔧 Architecture Diagram
+flowchart LR
+    A[VSTP Client] --> B[VSTP Server]
+    B --> C[/Flow Logger → JSONL/]
+    C --> D[extract_features.py → CSV]
+    D --> E[train_and_score.py → Model + offline alerts]
+    C --> F[realtime_isoforest.py → Real-time alerts]
+    E --> F
+    F --> G[(alerts_realtime_structured.csv)]
+
+📁 Project Structure
+VSTP-ml-demo/
+│
+├── VSTP Rust Protocol
+│   ├── src/
+│   ├── examples/tcp_server.rs
+│   ├── examples/tcp_client.rs
+│   └── (logger writes to /var/log/vstp_logs.jsonl)
+│
+├── ML Pipeline (Python)
+│   ├── extract_features.py
+│   ├── train_and_score.py
+│   ├── realtime_isoforest.py
+│   ├── inject_anomalies.py
+│   └── venv/
+│
+├── Output Artifacts
+│   ├── vstp_features.csv
+│   ├── alerts_offline.csv
+│   ├── alerts_realtime_structured.csv
+│   ├── isoforest_vstp.joblib
+│   └── alerts_realtime.log
+│
+└── Documentation
+    ├── README.md
+    └── VSTP_Report.pdf (generated)
+
+📡 VSTP Flow Logging (Rust)
+
+The server writes per-flow metadata to:
+
+/var/log/vstp_logs.jsonl
+
+
+Each line contains fields like:
+
+{
+ "timestamp": "...",
+ "flow_id": "...",
+ "packets": 8,
+ "bytes": 2048,
+ "duration": 0.28,
+ "dropped_packets": 0,
+ "checksum_errors": 0,
+ "flags": ["ACK"]
+}
+
+🧠 ML Pipeline
+1️⃣ Feature Extraction
+python extract_features.py --input /var/log/vstp_logs.jsonl --output vstp_features.csv
+
+2️⃣ Train IsolationForest
+python train_and_score.py --features vstp_features.csv --model_out isoforest_vstp.joblib --alerts_out alerts_offline.csv
+
+3️⃣ Run Realtime Detection
+nohup bash -c 'tail -n0 -f /var/log/vstp_logs.jsonl | ./venv/bin/python realtime_isoforest.py' &
+
+
+Realtime alerts are written to:
+
+alerts_realtime_structured.csv
+
+⚠️ Example Realtime Alerts
+timestamp,flow_id,label,score
+2025-11-15T12:54:44.741104,anom_0,ALERT,-0.18545
+2025-11-15T12:54:44.946361,anom_1,ALERT,-0.18545
+2025-11-15T12:54:45.353731,anom_3,ALERT,-0.18545
+
+🔥 Supported Attack Indicators
+Feature	Detects
+drop_rate	Packet drops / tampering
+checksum_errors	Corruption/modification
+std_pkt_size	Covert channel patterns
+jitter	Replay attacks
+bps	Data exfiltration bursts
+flags	SYN flood / handshake abuse
+🛠 How to Run Full Demo (Local)
+cd vstp_demo
+python3 -m venv venv
+source venv/bin/activate
+pip install numpy pandas scikit-learn joblib
+
+python extract_features.py
+python train_and_score.py
+nohup bash -c 'tail -n0 -f /var/log/vstp_logs.jsonl | ./venv/bin/python realtime_isoforest.py' &
+python inject_anomalies.py
+tail -n 10 alerts_realtime_structured.csv
+
+📌 Deliverables Included
+
+alerts_realtime_structured.csv
+
+alerts_offline.csv
+
+isoforest_vstp.joblib
+
+vstp_features.csv
+
+VSTP_Report.pdf
+
+🎯 Summary
+
+You built a complete, production-style network anomaly detection engine on top of your custom Rust protocol using a fully automated ML pipeline.
 # 🚀 VSTP - Vishu's Secure Transfer Protocol
 
 [![Crates.io](https://img.shields.io/crates/v/vstp.svg)](https://crates.io/crates/vstp)
