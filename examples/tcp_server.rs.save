@@ -42,29 +42,6 @@ async fn handle_frame(session_id: SessionId, frame: Frame) {
                     frame.payload.len()
                 );
             }
-// ===================== AI Logging Block =====================
-let log = VstpLog {
-    timestamp: Utc::now().to_rfc3339(),
-    flow_id: format!("session-{}-{}", session_id, Utc::now().timestamp_millis()),
-    src_ip: "127.0.0.1".to_string(),     // In this example we don't have real IP
-    dst_ip: "127.0.0.1".to_string(),     // So we set loopback (fine for demo)
-    src_port: 0,                         // Not exposed in current example
-    dst_port: 0,
-    protocol: "VSTP".to_string(),
-    packets: 1,
-    bytes: frame.payload.len() as u64,
-    duration: 0.0,                       // No timing info in example
-    checksum_errors: 0,
-    dropped_packets: 0,
-    retransmissions: 0,
-    flags: vec!["DATA".to_string()],
-    packet_sizes: None,
-    inter_arrivals: None,
-};
-
-write_log_line(&log);
-// ============================================================
-
         }
         FrameType::Bye => {
             info!("Session {}: Client said BYE", session_id);
