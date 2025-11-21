@@ -1,99 +1,153 @@
-# Coursera Automation Extension
+# VSTP — Real-Time ML Anomaly Detection 🚀
+#
+# End-to-end **Machine Learning–powered anomaly detection** for the Vishus Secure Transfer Protocol (VSTP).
+#
+# This project demonstrates how to monitor network flow metadata, run an **Isolation Forest** model in real time,
+# and instantly flag anomalies — all while the **Rust VSTP server & client** exchange data.
 
-![Version](https://img.shields.io/badge/version-3.5.7-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Platform](https://img.shields.io/badge/platform-Chrome-blue)
+# --------------------------------------------------------------------------
 
-> 🚀 **Visit the Official Website:** [👉 algoplug.com/products/coursera-automation](https://www.algoplug.com/products/coursera-automation)
+## 🔗 GitHub SEO Badges
 
-Using this extension, complete Coursera courses within seconds. It can be used for free to complete lectures, reading materials, ungraded assignments, discussions, and shareable link. `Note:` Quiz completion is a paid feature.
+# [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# [![Project Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/YourUsername/YourRepoName)
+# [![Language: Rust](https://img.shields.io/badge/Language-Rust-orange)](https://www.rust-lang.org/)
+# [![ML Model: scikit-learn](https://img.shields.io/badge/ML%20Model-scikit--learn-blue)](https://scikit-learn.org/)
 
-`Disclaimer:` Quiz Automation provides AI-generated answers, which may not always be accurate.
+# --------------------------------------------------------------------------
 
-## Table of Contents
+## 📌 Features
 
-- [Demo](#demo)
-- [Features](#features-status)
-- [Installation](#installation)
-- [How to use](#how-to-use)
-- [Shareable Link](#shareable-link)
-- [Quiz Automation](#quiz-automation)
-- [Keyboard Shortcuts](#keyboard-shortcuts)
-- [Author](#author)
-- [License](#license)
+# * ⚡ Real-time anomaly scoring (Isolation Forest, scikit-learn)
+# * 🛰️ Seamless integration with VSTP TCP server + client
+# * 🧪 Synthetic anomaly injector for testing
+# * 📈 Offline analysis + real-time monitoring
+# * 🧰 Easy 4-terminal demo setup
+# * 📦 Runs fully locally — no cloud dependency
 
-## Demo
+# --------------------------------------------------------------------------
 
-<div align="center">
-  <a href="https://youtu.be/jKkWUVLRLnE"><img src="https://i.ytimg.com/vi/jKkWUVLRLnE/hqdefault.jpg" alt="Coursera Automation Extension"></a>
-</div>
+## 🧠 ML Model
 
-## Features Status
+# The trained **Isolation Forest** model is used for unsupervised anomaly detection.
 
-| Feature                    | Status     | Notes                                |
-| -------------------------- | ---------- | ------------------------------------ |
-| Complete quizzes           | 🟢 Working |                                      |
-| Complete lectures          | 🟢 Working |                                      |
-| Complete reading materials | 🟢 Working |                                      |
-| Complete ungraded plugins  | 🟢 Working |                                      |
-| Complete discussions       | 🟢 Working |                                      |
-| Shareable link             | 🟢 Working |                                      |
-| Quiz automation            | 🟢 Working | Feedback-based accuracy improvement. |
+# Model File: `isoforest_vstp.joblib`
 
-## Installation
+# Extracted Features:
+# packets, bytes, duration, jitter, drop_rate, retrans_rate, checksum_error_rate, bps, flags_syn, flags_ack
 
-1. Clone or download the repository.
-2. Open the Chrome browser.
-3. Go to `chrome://extensions/`.
-4. Enable `Developer mode`.
-5. Click on `Load unpacked`.
-6. Select the downloaded folder.
-7. The extension will be added to the browser.
+# --------------------------------------------------------------------------
 
-## How to use
+## 🧩 Folder Structure
 
-1. Open your Coursera course.
-2. Click on the Extension icon.
-3. Choose the task you want to automate.
-4. Sit back while the Extension completes the task.
+# VSTP-Vishus-Secure-Transfer-Protocol/
+# │
+# ├── realtime_isoforest.py        # Realtime anomaly detection
+# ├── inject_anomalies.py          # Synthetic high-severity anomaly generator
+# ├── isoforest_vstp.joblib        # Trained Isolation Forest model
+# ├── run_all.sh                   # Auto-launch (tmux) 4-pane demo runner
+# │
+# ├── examples/                    # Rust VSTP examples (tcp_server, tcp_client)
+# ├── src/                         # Core Rust library code
+# └── venv/                        # Python virtual environment
 
-## Shareable Link
+# --------------------------------------------------------------------------
 
-To generate a **Shareable Link** for your assignment submission:
+## 🛠️ Installation
 
-1. **Navigate to the Submission Page**: Ensure you're on the "My Submission" tab of your assignment.
+### 1. Install Rust toolchain
 
-2. **Use the Extension**: Click the "Shareable Link" button provided by the extension.
+echo "Installing Rust toolchain..."
+# curl https://sh.rustup.rs -sSf | sh
 
-## Quiz Automation
+### 2. Install Python + venv + ML dependencies
 
-Extension will automatically get the solutions and mark the correct options.
+echo "Setting up Python environment and dependencies..."
 
-`Note:` When you Reattempt the quiz, it's using the previous attempt feedback to improve the accuracy of the answers.
+# Navigate to project directory
+# Assumes you are already in the project root if cloning
+# cd ~/VSTP-Vishus-Secure-Transfer-Protocol
 
-1. Open the quiz you want to complete.
-2. **Wait 10 seconds** for answers to load.
-3. If answers aren't marked correctly, press Alt + Z for a refresh.
-4. Submit your answers.
+# python3 -m venv venv
+# source venv/bin/activate
+# pip install -r requirements.txt
 
-## Keyboard Shortcuts
+# Note: If requirements.txt is missing, install manually:
+# pip install scikit-learn joblib pandas numpy
 
-- `Alt + W` or `Alt + B`: Toggle the Extension
-- `Alt + Z` or `Ctrl + Shift + Z`: Refresh the answers
+# --------------------------------------------------------------------------
 
-## Support the Developer
+## ▶️ FULL 4-TERMINAL DEMO
 
-If you find this extension helpful, consider supporting its development to keep it alive and growing! Every contribution makes a difference. ❤️
+# Below are the **exact 4 commands** you need to run the end-to-end demo.
+# Each command should be executed in a **separate terminal** session.
 
-- Donate via UPI: devjs@jio
-- [Sponsor me on GitHub](https://github.com/sponsors/sauravhathi)
-- [Buy me a coffee](https://www.buymeacoffee.com/sauravhathi)
-- [Donate via PayPal](https://paypal.me/sauravkumar680)
+# --------------------------------------------------------------------------
 
-## Author
+### 🖥️ Terminal 1 — Start VSTP TCP Server
 
-- [Saurav Hathi](https://github.com/sauravhathi)
+echo "--- COMMAND FOR TERMINAL 1 (Server) ---"
+echo "cd ~/VSTP-Vishus-Secure-Transfer-Protocol"
+echo "cargo run --example tcp_server"
 
-## License
+### 🖥️ Terminal 2 — Start VSTP TCP Client
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/sauravhathi/coursera-automation-extension/blob/master/LICENSE) file for details.
+echo "--- COMMAND FOR TERMINAL 2 (Client) ---"
+echo "cd ~/VSTP-Vishus-Secure-Transfer-Protocol"
+echo "cargo run --example tcp_client"
+
+### 🖥️ Terminal 3 — Real-time ML Detection (live alerts)
+
+echo "--- COMMAND FOR TERMINAL 3 (ML Detector) ---"
+echo "cd ~/VSTP-Vishus-Secure-Transfer-Protocol"
+echo "source venv/bin/activate"
+echo "PYTHONUNBUFFERED=1 \\"
+echo "tail -n0 -f /var/log/vstp_logs.jsonl \\"
+echo "| ./venv/bin/python ./realtime_isoforest.py"
+
+# Expected output will look like:
+# ALERT,2025-11-20T12:13:05Z,demo_high,-0.24
+# ALERT,2025-11-20T12:13:06Z,demo_high,-0.29
+
+### 🖥️ Terminal 4 — High-Severity Anomaly Injector
+
+echo "--- COMMAND FOR TERMINAL 4 (Injector) ---"
+echo "cd ~/VSTP-Vishus-Secure-Transfer-Protocol"
+echo "source venv/bin/activate"
+echo ""
+echo "while true; do"
+echo "  printf '{\"timestamp\":\"now\",\"flow_id\":\"demo_high\",\"packets\":1,\"bytes\":9000000,\"duration\":1.0,\"mean_pkt_size\":9000000,\"std_pkt_size\":0.0,\"jitter\":20.0,\"drop_rate\":0.4,\"retrans_rate\":0.0,\"checksum_error_rate\":0.1,\"bps\":9000000,\"flags_syn\":1,\"flags_ack\":0}\\n' >> /var/log/vstp_logs.jsonl"
+echo "  sleep 1"
+echo "done"
+
+# --------------------------------------------------------------------------
+
+## 🧪 Testing
+
+# To replay or review previous demo sessions:
+# cat alerts_realtime.log
+# cat vstp_features.csv
+
+# --------------------------------------------------------------------------
+
+## 📈 Output Files
+
+# File | Purpose
+# :--- | :---
+# alerts_realtime.log | Raw log of all real-time anomaly alerts
+# alerts_realtime_structured.csv | CSV-friendly alert format for easy review
+# alerts_offline.csv | Dump of anomalies detected during any offline analysis
+# vstp_features.csv | All extracted ML features used for detection
+
+# --------------------------------------------------------------------------
+
+## 🚀 Automatic 4-Pane Runner (tmux)
+
+# If you have **tmux** installed, you can start all 4 windows automatically:
+# ./run_all.sh
+
+# --------------------------------------------------------------------------
+
+## 🙌 Credits
+
+# Developed by **Nishant** — VSTP ML realtime anomaly detection project.
