@@ -65,7 +65,6 @@ echo "Installing Rust toolchain..."
 echo "Setting up Python environment and dependencies..."
 
 # Navigate to project directory
-# Assumes you are already in the project root if cloning
 # cd ~/VSTP-Vishus-Secure-Transfer-Protocol
 
 # python3 -m venv venv
@@ -131,14 +130,15 @@ echo "done"
 # --------------------------------------------------------------------------
 
 ## 📈 Output Files
-
-# File | Purpose
-# :--- | :---
-# alerts_realtime.log | Raw log of all real-time anomaly alerts
-# alerts_realtime_structured.csv | CSV-friendly alert format for easy review
-# alerts_offline.csv | Dump of anomalies detected during any offline analysis
-# vstp_features.csv | All extracted ML features used for detection
-
+# NOTE: This section uses standard Markdown to ensure table rendering is correct.
+# ```
+| File | Purpose |
+| :--- | :--- |
+| `alerts_realtime.log` | Raw log of all real-time anomaly alerts |
+| `alerts_realtime_structured.csv` | CSV-friendly alert format for easy review |
+| `alerts_offline.csv` | Dump of anomalies detected during any offline analysis |
+| `vstp_features.csv` | All extracted ML features used for detection |
+# ```
 # --------------------------------------------------------------------------
 
 ## 🚀 Automatic 4-Pane Runner (tmux)
