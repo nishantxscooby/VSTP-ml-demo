@@ -1,100 +1,80 @@
-#!/bin/bash
+# VSTP — Real-Time ML Anomaly Detection 🚀  
+A fully integrated pipeline combining **Virtual Secure Transfer Protocol (VSTP)** + **Rust server/client** + **Python ML anomaly detection using Isolation Forest**.
 
-# ==============================================================================
-# VSTP — REAL-TIME ML ANOMALY DETECTION 🚀
-# ==============================================================================
+---
 
-echo "End-to-end Machine Learning–powered anomaly detection for the"
-echo "Vishus Secure Transfer Protocol (VSTP)."
-echo ""
-echo "This project demonstrates how to monitor network flow metadata, run an"
-echo "Isolation Forest model in real time, and instantly flag anomalies — all while"
-echo "the Rust VSTP server & client exchange data."
+# 🎯 Perfect For  
 
-# ------------------------------------------------------------------------------
-# 📌 FEATURES
-# ------------------------------------------------------------------------------
-echo "⚡ Real-time anomaly scoring (Isolation Forest, scikit-learn)"
-echo "🛰️ Seamless integration with VSTP TCP server + client"
-echo "🧪 Synthetic anomaly injector for testing"
-echo "📈 Offline analysis + real-time monitoring"
-echo "🧰 Easy 4-terminal demo setup"
-echo "📦 Runs fully locally — no cloud dependency"
+- **Real-time Gaming:** Low-latency UDP/TCP with optional reliability  
+- **IoT Systems:** Lightweight protocol with robust error handling  
+- **Microservices:** Fast inter-service communication with rich metadata  
+- **Streaming Applications:** Efficient binary messaging with fragmentation support  
+- **Blockchain Networks:** Secure peer-to-peer communication  
+- **Edge Computing:** Minimal overhead, maximum throughput  
 
-# ------------------------------------------------------------------------------
-# 🧠 ML MODEL
-# ------------------------------------------------------------------------------
-echo "The trained Isolation Forest model is stored as:"
-echo "isoforest_vstp.joblib"
-echo ""
-echo "Extracted Features:"
-echo "packets, bytes, duration, jitter, drop_rate, retrans_rate,"
-echo "checksum_error_rate, bps, flags_syn, flags_ack"
+---
 
-# ------------------------------------------------------------------------------
-# 🧩 FOLDER STRUCTURE
-# ------------------------------------------------------------------------------
-# VSTP-Vishus-Secure-Transfer-Protocol/
-# │
-# ├── realtime_isoforest.py        # Realtime anomaly detection script
-# ├── inject_anomalies.py          # Synthetic high-severity anomaly generator
-# ├── isoforest_vstp.joblib        # Trained Isolation Forest model
-# ├── run_all.sh                   # Auto-launch (tmux) 4-pane demo runner
-# │
-# ├── examples/                    # Rust VSTP examples (tcp_server, tcp_client)
-# ├── src/                         # Core Rust library code
-# └── venv/                        # Python virtual environment
+# ⚡ Installation  
 
-# ==============================================================================
-# 🛠️ INSTALLATION
-# ==============================================================================
+Add VSTP to your **Cargo.toml**:
 
-# 1. Install Rust toolchain
-# -------------------------
-# curl https://sh.rustup.rs -sSf | sh
+```toml
+[dependencies]
+vstp = "0.1"
+tokio = { version = "1.0", features = ["full"] }
+```
 
-# 2. Install Python + venv + ML dependencies
-# ------------------------------------------
-# cd ~/VSTP-Vishus-Secure-Transfer-Protocol
-# python3 -m venv venv
-# source venv/bin/activate
-# pip install -r requirements.txt
+Create virtual environment for ML scripts:
 
-# (If requirements.txt is missing, install manually)
-# pip install scikit-learn joblib pandas numpy
+```bash
+cd ~/VSTP-Vishus-Secure-Transfer-Protocol
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 
-# ==============================================================================
-# ▶️ FULL 4-TERMINAL DEMO
-# ==============================================================================
-echo "Run each of the following blocks in a separate terminal window."
+---
 
-# 🖥️ TERMINAL 1 — START VSTP TCP SERVER
-# -------------------------------------
+# 🚀 Quick Start — 4-Terminal Demo (Full Pipeline)
+
+Run VSTP **server**, **client**, **ML realtime detection**, **anomaly injector**.
+
+---
+
+## 🖥️ Terminal 1 — VSTP TCP Server
+
+```bash
 cd ~/VSTP-Vishus-Secure-Transfer-Protocol
 cargo run --example tcp_server
+```
 
-# 🖥️ TERMINAL 2 — START VSTP TCP CLIENT
-# -------------------------------------
+---
+
+## 🖥️ Terminal 2 — VSTP TCP Client
+
+```bash
 cd ~/VSTP-Vishus-Secure-Transfer-Protocol
 cargo run --example tcp_client
+```
 
-# 🖥️ TERMINAL 3 — REAL-TIME ML DETECTION (LIVE ALERTS)
-# ----------------------------------------------------
-echo "This tracks the log file and pipes data to the ML model."
+---
+
+## 🧠 Terminal 3 — Realtime ML Detection (live alerts)
+
+```bash
 cd ~/VSTP-Vishus-Secure-Transfer-Protocol
 source venv/bin/activate
 
 PYTHONUNBUFFERED=1 \
 tail -n0 -f /var/log/vstp_logs.jsonl \
 | ./venv/bin/python ./realtime_isoforest.py
+```
 
-# Expected Output:
-# ALERT,2025-11-20T12:13:05Z,demo_high,-0.24
-# ALERT,2025-11-20T12:13:06Z,demo_high,-0.29
+---
 
-# 🖥️ TERMINAL 4 — HIGH-SEVERITY ANOMALY INJECTOR
-# ----------------------------------------------
-echo "Injects fake 'bad' traffic to trigger the ML alerts."
+## 💥 Terminal 4 — High-Severity Anomaly Injector
+
+```bash
 cd ~/VSTP-Vishus-Secure-Transfer-Protocol
 source venv/bin/activate
 
@@ -102,31 +82,104 @@ while true; do
   printf '{"timestamp":"now","flow_id":"demo_high","packets":1,"bytes":9000000,"duration":1.0,"mean_pkt_size":9000000,"std_pkt_size":0.0,"jitter":20.0,"drop_rate":0.4,"retrans_rate":0.0,"checksum_error_rate":0.1,"bps":9000000,"flags_syn":1,"flags_ack":0}\n' >> /var/log/vstp_logs.jsonl
   sleep 1
 done
+```
 
-# ==============================================================================
-# 🧪 TESTING
-# ==============================================================================
-echo "To replay or review previous demo sessions:"
-# cat alerts_realtime.log
-# cat vstp_features.csv
+---
 
-# ==============================================================================
-# 📈 OUTPUT FILES
-# ==============================================================================
-# File                            | Purpose
-# --------------------------------|---------------------------------------------
-# alerts_realtime.log             | Raw log of all real-time anomaly alerts
-# alerts_realtime_structured.csv  | CSV-friendly alert format for easy review
-# alerts_offline.csv              | Dump of anomalies from offline analysis
-# vstp_features.csv               | All extracted ML features used for detection
+# 📊 Alert Format  
 
-# ==============================================================================
-# 🚀 AUTOMATIC RUNNER (TMUX)
-# ==============================================================================
-echo "If you have tmux installed, you can start all 4 windows automatically:"
-# ./run_all.sh
+Example output:
 
-# ==============================================================================
-# 🙌 CREDITS
-# ==============================================================================
-echo "Developed by Nishant — VSTP ML realtime anomaly detection project."
+```text
+ALERT,2025-11-20T21:13:03.522845+00:00,demo_high,-0.24646804413218
+```
+
+Each alert includes:
+
+- **Timestamp**  
+- **Flow ID**  
+- **ML score (Isolation Forest)**  
+- **Negative score = anomaly**  
+
+---
+
+# 🧬 ML Model (Isolation Forest)
+
+- Model trained on **vstp_features.csv**  
+- Saved as: **isoforest_vstp.joblib**  
+- Used for **real-time inference**  
+- Zero-latency scoring via streaming logs  
+
+Replace model anytime:
+
+```bash
+cp new_model.joblib isoforest_vstp.joblib
+```
+
+---
+
+# 🏗️ Project Structure  
+
+```
+VSTP-Vishus-Secure-Transfer-Protocol/
+│── src/                 # Rust VSTP implementation
+│── examples/            # tcp_server / tcp_client
+│── venv/                # Python virtual environment
+│── isoforest_vstp.joblib
+│── realtime_isoforest.py
+│── inject_anomalies.py
+│── run_all.sh           # Auto-launch script (optional)
+│── README.md
+```
+
+---
+
+# 🔍 Realtime ML Pipeline  
+
+1. **tcp_client** sends frames  
+2. **tcp_server** receives & writes features into `/var/log/vstp_logs.jsonl`  
+3. **tail -n0 -f** streams data  
+4. **Isolation Forest** model scores live traffic  
+5. Alerts printed instantly in terminal  
+
+---
+
+# 🛠️ Offline Analysis  
+
+Generate offline alerts:
+
+```bash
+python3 analyze_offline.py ./vstp_features.csv
+```
+
+---
+
+# 🧪 Testing  
+
+Run tests:
+
+```bash
+cargo test
+```
+
+---
+
+# 👨‍💻 Author  
+
+**Nishant**  
+B.Tech CSE  
+GitHub: https://github.com/nishantxscooby  
+
+---
+
+# ⭐ Contribute  
+
+PRs welcome!  
+Fork → Add features → Open PR.
+
+---
+
+# 📜 License  
+
+Dual licensed: MIT + Apache-2.0
+
